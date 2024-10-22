@@ -70,7 +70,22 @@ module TerrariaResources
                         name: 'TSHOCK_WORLD_NAME',
                         value: name
                       }
+                    ],
+                    volumeMounts: [
+                      {
+                        mountPath: '/worlds',
+                        name: 'worlds-directory-volume'
+                      }
                     ]
+                  }
+                ],
+                volumes: [
+                  {
+                    name: 'worlds-directory-volume',
+                    hostPath: {
+                      path: '/worlds',
+                      type: 'Directory'
+                    }
                   }
                 ]
               }
