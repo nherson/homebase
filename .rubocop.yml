@@ -1,0 +1,2 @@
+Metrics/MethodLength:
+  Enabled: false # this rule is stupid and over-bearing

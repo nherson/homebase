@@ -5,6 +5,8 @@ require 'kubeclient'
 require 'sorbet-runtime'
 require 'pry'
 
+require_relative 'resources'
+
 # TerrariaServerManager is the main entrypoint for managing
 # running Terraria servers on kubernetes
 class TerrariaServerManager
@@ -15,6 +17,7 @@ class TerrariaServerManager
     config = Kubeclient::Config.read(ENV['KUBECONFIG'] || "#{ENV['HOME']}/.kube/config")
     @core_client = T.let(kubeclient(config), T.untyped)
     @app_client = T.let(kubeclient(config, 'apis/apps'), T.untyped)
+    @app_client.discover
   end
 
   sig { void }
@@ -22,6 +25,13 @@ class TerrariaServerManager
     @app_client.get_deployments(namespace: 'default').each do |d|
       puts d.metadata.name
     end
+  end
+
+  sig { params(name: String, port: Integer).void }
+  def launch(name, port)
+    server = TerrariaResources::TShockServer.new(name, port)
+    @app_client.create_deployment(server.deployment)
+    @core_client.create_service(server.service)
   end
 
   private

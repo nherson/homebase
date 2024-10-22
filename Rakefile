@@ -4,6 +4,8 @@ task default: %w[list]
 
 task :launch, [:name, :port] do |_t, args|
   puts "Launching server with world name #{args[:name]} and port #{args[:port]}"
+  c = TerrariaServerManager.new
+  c.launch(args[:name], args[:port].to_i)
 end
 
 task :list do
