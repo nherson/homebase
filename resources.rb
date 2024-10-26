@@ -8,6 +8,13 @@ require 'sorbet-runtime'
 module TerrariaResources
   extend T::Sig
 
+  # Returns the prefix (without the trailing `-`) of resources created
+  # in kubernetes using this module
+  sig { returns(String) }
+  def self.resource_prefix
+    'terraria-tshock-server'
+  end
+
   # TShockDeployment contains kubernetes resource information for a TShock server deployment
   class TShockServer
     extend T::Sig
@@ -94,40 +101,40 @@ module TerrariaResources
         )
       end
     end
-  end
 
-  # Standard parameterized Service resource for a Terraria server
-  class TShockServiceResource < Kubeclient::Resource
-    extend T::Sig
-    sig { params(name: String, port: Integer).void }
-    def initialize(name, port)
-      super(
-        metadata: {
-          namespace: 'default',
-          labels: {
-            app: "terraria-tshock-server-#{name}"
+    # Standard parameterized Service resource for a Terraria server
+    class TShockServiceResource < Kubeclient::Resource
+      extend T::Sig
+      sig { params(name: String, port: Integer).void }
+      def initialize(name, port)
+        super(
+          metadata: {
+            namespace: 'default',
+            labels: {
+              app: "terraria-tshock-server-#{name}"
 
+            },
+            name: "terraria-tshock-server-#{name}"
           },
-          name: "terraria-tshock-server-#{name}"
-        },
-        spec: {
-          allocateLoadBalancerNodePorts: true,
-          externalTrafficPolicy: 'Cluster',
-          internalTrafficPolicy: 'Cluster',
-          ipFamilies: ['IPv4'],
-          ipFamilyPolicy: 'SingleStack',
-          ports: [{
-            port: port,
-            protocol: 'TCP',
-            targetPort: 7777
-          }],
-          selector: {
-            app: "terraria-tshock-server-#{name}"
-          },
-          sessionAffinity: 'None',
-          type: 'LoadBalancer'
-        }
-      )
+          spec: {
+            allocateLoadBalancerNodePorts: true,
+            externalTrafficPolicy: 'Cluster',
+            internalTrafficPolicy: 'Cluster',
+            ipFamilies: [ 'IPv4' ],
+            ipFamilyPolicy: 'SingleStack',
+            ports: [ {
+              port: port,
+              protocol: 'TCP',
+              targetPort: 7777
+            } ],
+            selector: {
+              app: "terraria-tshock-server-#{name}"
+            },
+            sessionAffinity: 'None',
+            type: 'LoadBalancer'
+          }
+        )
+      end
     end
   end
 end

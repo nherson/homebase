@@ -3,7 +3,6 @@
 require 'k8s-ruby'
 require 'kubeclient'
 require 'sorbet-runtime'
-require 'pry'
 
 require_relative 'resources'
 
@@ -15,9 +14,8 @@ class TerrariaServerManager
   sig { void }
   def initialize
     config = Kubeclient::Config.read(ENV['KUBECONFIG'] || "#{ENV['HOME']}/.kube/config")
-    @core_client = T.let(kubeclient(config), T.untyped)
-    @app_client = T.let(kubeclient(config, 'apis/apps'), T.untyped)
-    @app_client.discover
+    @core_client = T.let(kubeclient(config), Kubeclient::Client)
+    @app_client = T.let(kubeclient(config, 'apis/apps'), Kubeclient::Client)
   end
 
   sig { void }
@@ -34,18 +32,34 @@ class TerrariaServerManager
     @core_client.create_service(server.service)
   end
 
+  sig { params(name: String, purge: T::Boolean).void }
+  def destroy(name, purge: false)
+    resource_name = "#{TerrariaResources.resource_prefix}-#{name}"
+    # binding.pry
+    @core_client.delete_service(resource_name, 'default')
+    @app_client.delete_deployment(resource_name, 'default')
+    delete_world_files(name) if purge
+  end
+
   private
 
-  sig { params(config: T.untyped, endpoint_suffix: T.nilable(String)).returns(T.untyped) }
+  sig { params(name: String).void }
+  def delete_world_files(name)
+    directory = 'worlds'
+    pattern = /#{name}\.wld(\.bak)?/
+
+    matching_files = Dir.glob(File.join(directory, '*')).select { |file| file =~ pattern }
+    matching_files.each { |file| File.delete(file) }
+  end
+
+  sig { params(config: Kubeclient::Config, endpoint_suffix: T.nilable(String)).returns(Kubeclient::Client) }
   def kubeclient(config, endpoint_suffix = nil)
     endpoint = endpoint_suffix.nil? ? config.context.api_endpoint : "#{config.context.api_endpoint}/#{endpoint_suffix}"
-    T.let(
       Kubeclient::Client.new(
         endpoint,
         'v1',
         ssl_options: config.context.ssl_options,
         auth_options: config.context.auth_options
-      ), T.untyped
-    )
+      )
   end
 end
