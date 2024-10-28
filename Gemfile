@@ -1,12 +1,12 @@
 source "https://rubygems.org"
 
-gem "rubocop", group: :development
 gem "sorbet", group: :development
+gem "sorbet-runtime"
 gem "tapioca", require: false, group: %i[development test]
 
-gem "k8s-ruby"
+
+# Kubernetes things
 gem "kubeclient"
-gem "sorbet-runtime"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1", ">= 7.2.1.2"
@@ -56,6 +56,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "rubocop"
 end
 
 group :test do

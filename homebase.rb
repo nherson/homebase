@@ -1,6 +1,5 @@
 # typed: strict
 
-require 'k8s-ruby'
 require 'kubeclient'
 require 'sorbet-runtime'
 

@@ -32,7 +32,10 @@ RUN apt-get update -qq && \
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
+# RUN gem update --system && bundle lock --add-platform aarch64-linux
+# RUN gem update --system
+# RUN bundle lock --add-platform aarch64-linux 
+RUN bundle lock --add-platform aarch64-linux && bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
