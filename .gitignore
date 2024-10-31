@@ -37,3 +37,6 @@
 /worlds
 
 /config/credentials/production.key
+k8s/client.crt
+k8s/client.key
+k8s/ca.crt

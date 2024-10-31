@@ -4,6 +4,8 @@ gem "sorbet", group: :development
 gem "sorbet-runtime"
 gem "tapioca", require: false, group: %i[development test]
 
+# To address warnings
+gem "ostruct"
 
 # Kubernetes things
 gem "kubeclient"
@@ -51,6 +53,8 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "pry"
 end
 
 group :development do

@@ -62,7 +62,18 @@ COPY --from=build /rails /rails
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
+
+# Move client keys into place to use with kubeclient in rails API
+COPY k8s/client.crt /k8s/client.crt
+COPY k8s/client.key /k8s/client.key
+COPY k8s/ca.crt /k8s/ca.crt
+COPY k8s/client.yml /k8s/client.yml
+RUN chown -R rails /k8s
+
 USER 1000:1000
+
+# Kubernetes client config
+ENV KUBECONFIG='/k8s/client.yml'
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
