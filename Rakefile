@@ -42,13 +42,17 @@ namespace :secrets do
 
   desc 'Registers required secrets into the minikube cluster'
   task :init do
+    puts "Generating rails secret key"
     # Create the initial keys (local and production)
     sh 'bin/rails credentials:edit --environment production'
     sh 'bin/rails credentials:edit'
     # Wire the production key into kubernetes
     key = File.read("config/credentials/production.key")
-    puts "THING: #{key}"
     sh "kubectl create secret generic rails-master-key --from-literal=key=#{key}"
+
+    puts "Generating MySQL root password"
+    mysql_password = `openssl rand -base64 24`
+    sh "kubectl create secret generic mysql-credentials --from-literal=password=#{mysql_password}"
   end
 
   desc 'Update config/credentials/production.key in the kubernetes cluster'

@@ -21,10 +21,25 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        # - name: RAILS_MASTER_KEY
-        #   value: c7504929c056948ca1cc76c85ee4def8
         - name: RAILS_MASTER_KEY
           valueFrom:
             secretKeyRef:
               name: rails-master-key
               key: key
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-credentials
+              key: password
+        - name: DB_USERNAME
+          value: root
+        - name: DB_HOST
+          value: mysql
+        volumeMounts:
+        - mountPath: /db
+          name: "db-volume"
+      volumes:
+      - name: "db-volume"
+        hostPath:
+          path: "/storage/db"
+          type: "Directory"

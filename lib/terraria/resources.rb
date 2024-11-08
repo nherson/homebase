@@ -91,7 +91,7 @@ module Terraria
                     {
                       name: "worlds-directory-volume",
                       hostPath: {
-                        path: "/worlds",
+                        path: "/storage/worlds",
                         type: "Directory"
                       }
                     }

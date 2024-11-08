@@ -10,7 +10,7 @@ To get started running locally:
 
 * `minikube start`
 * `minikube tunnel`
-* `minikube mount ....`
+* `minikube mount storage/worlds:/worlds`
 * `cp KUBE_CRT ./k8s/client.crt`
 * `cp KUBE_KEY ./k8s/client.key`
 * `cp KUBE_CA_CRT ./k8s/ca.crt`

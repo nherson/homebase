@@ -34,8 +34,6 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-/worlds
-
 /config/credentials/production.key
 k8s/client.crt
 k8s/client.key

@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/runtime:6.0
 
 WORKDIR /tshock
 
-COPY scripts scripts
+COPY include/scripts scripts
 RUN chmod +x scripts/start_tshock.sh
 
 RUN apt-get update && apt-get install -y wget unzip
