@@ -6,9 +6,7 @@
 * Support more options for launching new worlds
   * Prob best to do after Rails integration
 * ~~Destroy world support~~
-* Persistence for DB running in minikube
-  * First: sqlite file
-  * Later: MySQL
-* Proper secret storage
-  * k8s secrets?
+* ~~Persistence for DB running in minikube~~
+* ~~Proper secret storage~~
 * Wire up TShock status API
+* MVC logic for world management

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     namespace :v1 do
-      resources :worlds, only: [ :index ]
+      resources :worlds, only: [ :index, :create ]
     end
   end
 end
