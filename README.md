@@ -6,7 +6,7 @@ A fun little hobby project. Uses kubernetes to easily launch and tear down Terra
 Setup
 ===
 
-To get started running locally:
+To get started running locally (to use in kubernetes):
 
 * `minikube start`
 * `minikube tunnel`
@@ -18,3 +18,5 @@ To get started running locally:
 * `rake deploy`
 
 Service accessible at `http://localhost:8080`
+
+To run locally for development, use `bin/dev` (dropped in place by the `tailswindcss` integration).

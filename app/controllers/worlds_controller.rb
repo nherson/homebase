@@ -26,6 +26,10 @@ class WorldsController < ApplicationController
   end
 
   sig { returns(T.untyped) }
+  def new
+  end
+
+  sig { returns(T.untyped) }
   def destroy
     # TODO
   end

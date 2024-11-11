@@ -1,2 +1,11 @@
-<h1><%= @world.name %></h1>
-Port: <%= @world.port %><br>
+<!-- app/views/welcome/index.html.erb -->
+<div class="py-2">
+  <p class="text-4xl font-bold text-center text-blue-600">
+    World <%= @world.name %>
+  </p>
+</div>
+<div class="py-2">
+  <p class="text-center text-md text-gray-700">
+    Listening on port <%= @world.port %>
+  </p>
+</div>

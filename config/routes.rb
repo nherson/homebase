@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "worlds#index"
-  resources :worlds, only: [ :index, :show ]
+  resources :worlds, only: [ :index, :show, :new ]
 
   # API routes
   namespace :api do

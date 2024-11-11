@@ -1,5 +1,29 @@
-<h1>Names</h1>
-<% @worlds.each do |world| %>
-  Name: <%= world.name %><br>
-  Port: <%= world.port %><br>
-<% end %>
+<div class="p-2">
+  <p class="text-2xl text-blue-600">Worlds</p>
+</div>
+<div class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          Name
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Port
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @worlds.each do |world| %>
+        <tr class="cursor-pointer hover:bg-gray-50 bg-white border-b dark:bg-gray-800 dark:border-gray-700" href="<%= world_path(world) %>" onclick="window.location='<%= world_path(world) %>'">
+          <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= world.name %>
+          </td>
+          <td class="px-6 py-4">
+            <%= world.port %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
