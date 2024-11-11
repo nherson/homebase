@@ -1,1 +1,5 @@
-This is where the worlds list lives
+<h1>Names</h1>
+<% @worlds.each do |world| %>
+  Name: <%= world.name %><br>
+  Port: <%= world.port %><br>
+<% end %>

@@ -10,3 +10,4 @@
 * ~~Proper secret storage~~
 * Wire up TShock status API
 * MVC logic for world management
+* Setup packwerk
