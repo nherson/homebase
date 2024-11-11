@@ -29,6 +29,13 @@ module Api
           render json: @world.errors, status: 500
         end
       end
+
+      sig { returns(T.untyped) }
+      def destroy
+        @world = World.find(params[:id])
+        @world.destroy
+        head :no_content
+      end
     end
   end
 end
